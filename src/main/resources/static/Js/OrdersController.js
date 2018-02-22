@@ -6,7 +6,7 @@
 var orders =[];
 var products;
 var order;
-var lastId=0;
+var currentTotal=0;
 
 function loadOrders(){	
     axios.get('/orders/ordenes').then(function (response) {
@@ -35,7 +35,6 @@ function allOrders(ordenes){
         x.order_id = ordenes[w].order_id;
         x.table_id = ordenes[w].table_id;
         x.products = ordenes[w].products;
-        orders.push(x);
         insertTableOrder(x);
     } 
 }
@@ -48,13 +47,15 @@ function getTotal(idMesa){
     axios.get('/orders/'+idMesa+'/total')
             .then(function (response) {
               //console.log(response['data']);
-              return response['data'];
+              document.getElementById(idMesa+"total").innerHTML=response['data'];
             })
             .catch(function (error) {
               console.log(error);
               dialog();
         });
 }
+
+
 function addProductToOrder(idOrder){
 	var newOrder = {product:"CHOP SUEY",quantity:2,Price:15000};
 	var t = document.getElementById(idOrder);
@@ -111,13 +112,17 @@ function insertTableOrder(orderInsert){
 	//create the button to delete the order
 	var db = document.createElement("p");
 	db.setAttribute("class", "lead");
-	t.insertRow(t.rows.length).insertCell(0).appendChild(db);
+	var rtl = t.insertRow(t.rows.length);
+        rtl.insertCell(0).appendChild(db);
+        rtl.insertCell(1);
+        rtl.insertCell(2).setAttribute("id",orderInsert.order_id+"total");
+        getTotal(orderInsert.order_id);
 	var b = document.createElement("a");
 	b.setAttribute("class","btn btn-lg");
 	b.innerHTML = "Remove this Order";
 	b.setAttribute("onclick","removeOrderById("+String(orderInsert.table_id)+")");
 	db.appendChild(b);
-        lastId = orderInsert.table_id;		
+        orders.push(orderInsert);	
 }
 
 function addOrder(){

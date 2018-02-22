@@ -33,6 +33,14 @@ public class RestaurantOrderServicesStub implements RestaurantOrderServices {
             return tableOrders.get(tableNumber);
         }
     }
+    
+    public Map<Integer, Order> getTableOrders() {
+        if (tableOrders.isEmpty()) {
+            return null;
+        } else {
+            return tableOrders;
+        }
+    }
 
     @Override
     public Set<String> getAvailableProductNames() {

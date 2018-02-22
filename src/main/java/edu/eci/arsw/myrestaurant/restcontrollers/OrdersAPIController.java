@@ -23,6 +23,7 @@ import edu.eci.arsw.myrestaurant.services.OrderServicesException;
 import edu.eci.arsw.myrestaurant.services.RestaurantOrderServicesStub;
 import java.util.Hashtable;
 import java.util.Map;
+import java.util.ArrayList;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -57,7 +58,8 @@ public class OrdersAPIController {
                 return new ResponseEntity<>("ERROR 404 :"+ex,HttpStatus.NOT_FOUND);
             }  
         }  
-    
+        
+        
     @RequestMapping(path = "/{idmesa}",method = RequestMethod.GET)
         public ResponseEntity<?> managerGetOrderTable(@PathVariable int idmesa){
             try {
@@ -67,6 +69,16 @@ public class OrdersAPIController {
                 else{
                     return new ResponseEntity<>(ordersService.getTableOrder(idmesa),HttpStatus.ACCEPTED);
                 }
+            } catch (Exception ex) {
+                Logger.getLogger(OrdersAPIController.class.getName()).log(Level.SEVERE, null, ex);
+                return new ResponseEntity<>("Error 404 :"+ex,HttpStatus.NOT_FOUND);
+            }  
+        }
+        
+    @RequestMapping(path = "/ordenes",method = RequestMethod.GET)
+        public ResponseEntity<?> managerGetOrdenes(){
+            try {
+                return new ResponseEntity<>(ordersService.getTableOrders(),HttpStatus.ACCEPTED);
             } catch (Exception ex) {
                 Logger.getLogger(OrdersAPIController.class.getName()).log(Level.SEVERE, null, ex);
                 return new ResponseEntity<>("Error 404 :"+ex,HttpStatus.NOT_FOUND);

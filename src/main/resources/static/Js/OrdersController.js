@@ -10,8 +10,57 @@ function chargeOrders(){
 	for (i=0;i<orders.length;i++){
 		insertTableOrder(orders[i]);
 	}	
+        axios.get('/orders/ordenes')
+            .then(function (response) {
+              var ordenes = allOrders(Object.entries(response['data']));              
+              console.log(ordenes);
+              return ordenes;
+            })
+            .catch(function (error) {
+              console.log(error);
+              dialog();
+        });  
 }
 
+function allOrders(ordenes){
+    var newOrders = [];
+    for(var w in ordenes){
+        //console.log(ordenes[w]);
+        ordenes[w].order_id = ordenes[w][0];
+        ordenes[w].table_id = ordenes[w][1].tableNumber;
+        delete ordenes[w][1].tableNumber;
+        ordenes[w].products = [ordenes[w][1].orderAmountsMap];
+        delete ordenes[w][1].orderAmountsMap;  
+        for(var k in ordenes[w].products){
+           for(var g in ordenes[w].products[k]){
+               ordenes[w].products.push({"product": g , "quantity":ordenes[w].products[k][g]});
+           }    
+        }   
+        ordenes[w].products.splice(0,1);
+        var x = {};
+        x.order_id = ordenes[w].order_id;
+        x.table_id = ordenes[w].table_id;
+        x.products = ordenes[w].products;
+        newOrders.push(x);
+    }    
+    return newOrders;
+}
+
+function dialog() {
+    alert("There is a problem with our servers. We apologize for the inconvince, please try again later");
+}
+
+function getTotal(idMesa){
+    axios.get('/orders/'+idMesa+'/total')
+            .then(function (response) {
+              //console.log(response['data']);
+              return response['data'];
+            })
+            .catch(function (error) {
+              console.log(error);
+              dialog();
+        });
+}
 function addProductToOrder(idOrder){
 	var lastIndex = ordersTable[ordersTable.length-1].IdOrder;
 	var newOrder = {IdOrder:lastIndex+1,Product:"CHOP SUEY",Quantity:2,Price:15000};
@@ -95,3 +144,4 @@ function removeOrderById(intId){
 		}
 	}
 }
+

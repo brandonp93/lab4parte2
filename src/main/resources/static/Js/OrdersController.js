@@ -1,29 +1,23 @@
+/* global ordenes */
+
 /**
 * @author jefferson Castaneda
 */
 var orders =[];
-products = [{Product:"HAMBURGER",Quantity:3,Price:10000},{Product:"PIZZA",Quantity:1,Price:3000},{Product:"COKE",Quantity:4,Price:5200}];
-var order = {IdOrder:1, Products:products};
-orders.push(order);
+var products;
+var order;
+var lastId=0;
 
-function chargeOrders(){
-	for (i=0;i<orders.length;i++){
-		insertTableOrder(orders[i]);
-	}	
-        axios.get('/orders/ordenes')
-            .then(function (response) {
-              var ordenes = allOrders(Object.entries(response['data']));              
-              console.log(ordenes);
-              return ordenes;
-            })
-            .catch(function (error) {
-              console.log(error);
-              dialog();
-        });  
+function loadOrders(){	
+    axios.get('/orders/ordenes').then(function (response) {
+        allOrders(Object.entries(response['data'])); 
+    }).catch(function (error) {
+        console.log(error);
+        dialog();
+    });                
 }
 
 function allOrders(ordenes){
-    var newOrders = [];
     for(var w in ordenes){
         //console.log(ordenes[w]);
         ordenes[w].order_id = ordenes[w][0];
@@ -41,9 +35,9 @@ function allOrders(ordenes){
         x.order_id = ordenes[w].order_id;
         x.table_id = ordenes[w].table_id;
         x.products = ordenes[w].products;
-        newOrders.push(x);
-    }    
-    return newOrders;
+        orders.push(x);
+        insertTableOrder(x);
+    } 
 }
 
 function dialog() {
@@ -62,16 +56,15 @@ function getTotal(idMesa){
         });
 }
 function addProductToOrder(idOrder){
-	var lastIndex = ordersTable[ordersTable.length-1].IdOrder;
-	var newOrder = {IdOrder:lastIndex+1,Product:"CHOP SUEY",Quantity:2,Price:15000};
+	var newOrder = {product:"CHOP SUEY",quantity:2,Price:15000};
 	var t = document.getElementById(idOrder);
 	var rowdata = t.insertRow(t.rows.length);
 	var n=rowdata.insertCell(0);
 	var q =rowdata.insertCell(1);
-	var p = rowdata.insertCell(2);
-	n.appendChild(document.createTextNode(newOrder.Product));
-	q.appendChild(document.createTextNode(newOrder.Quantity));
-	p.appendChild(document.createTextNode(newOrder.Price));
+	//var p = rowdata.insertCell(2);
+	n.appendChild(document.createTextNode(newOrder.product));
+	q.appendChild(document.createTextNode(newOrder.quantity));
+	//p.appendChild(document.createTextNode(newOrder.Price));
 }
 
 function setTableHeader(rowHeader){
@@ -82,7 +75,7 @@ function setTableHeader(rowHeader){
 	rowHeader.appendChild(qa);
 	qa.innerHTML = "Quantity";
 	var pc = document.createElement("th");
-	pc.innerHTML = "Price";
+	pc.innerHTML = "Total";
 	rowHeader.appendChild(pc);
 }
 
@@ -94,11 +87,11 @@ function insertTableOrder(orderInsert){
 	var content = document.getElementById("OrdersDiv");
 	//create a tag to identify which order is presented
 	var inf = document.createElement("caption");
-	inf.innerHTML="ORDER "+ String(orderInsert.IdOrder);
+	inf.innerHTML="ORDER "+ String(orderInsert.order_id);
 	//create a DOM table
 	var t = document.createElement("table");
 	t.appendChild(inf);
-	t.setAttribute("id",orders.length);
+	t.setAttribute("id",orderInsert.table_id);
 	t.setAttribute("class", "table");
 	content.appendChild(t);	
 	var th = document.createElement("thead");
@@ -108,13 +101,12 @@ function insertTableOrder(orderInsert){
 	th.appendChild(tr);
 	t.appendChild(th);
 	//get the products of the current order
-	var productInsert = orderInsert.Products;
+	var productInsert = orderInsert.products;
 	//insert all products of the order registring all of the objects in productInsert
 	for (i = 0; i < productInsert.length; i++){
 		var rp = t.insertRow(t.rows.length);
-		rp.insertCell(0).appendChild(document.createTextNode(productInsert[i].Product));
-		rp.insertCell(1).appendChild(document.createTextNode(productInsert[i].Quantity));
-		rp.insertCell(2).appendChild(document.createTextNode(productInsert[i].Price));
+		rp.insertCell(0).appendChild(document.createTextNode(productInsert[i].product));
+		rp.insertCell(1).appendChild(document.createTextNode(productInsert[i].quantity));
 	}	
 	//create the button to delete the order
 	var db = document.createElement("p");
@@ -123,25 +115,38 @@ function insertTableOrder(orderInsert){
 	var b = document.createElement("a");
 	b.setAttribute("class","btn btn-lg");
 	b.innerHTML = "Remove this Order";
-	b.setAttribute("onclick","removeOrderById("+String(orderInsert.IdOrder)+")");
+	b.setAttribute("onclick","removeOrderById("+String(orderInsert.table_id)+")");
 	db.appendChild(b);
-		
+        lastId = orderInsert.table_id;		
 }
 
 function addOrder(){
-	products =[{Product:"HOTDOG",Quantity:3,Price:9000},{Product:"PIZZA",Quantity:1,Price:3000},{Product:"COKE",Quantity:1,Price:1300}];
-	order = {IdOrder:orders.length+1,Products:products};
-	orders.push(order);
-	insertTableOrder(order);		
+    products =[{product:"HOTDOG",quantity:3,Price:9000},{product:"PIZZA",quantity:1,Price:3000},{product:"COKE",quantity:1,Price:1300}];
+    var max = 0;
+    for (i=0;i<orders.length-1;i++){
+        if (orders[i].order_id>orders[i+1].order_id){
+            max=orders[i].order_id;
+        }else{
+            max=orders[i+1].order_id;
+        }
+    }
+    order = {order_id:parseInt(max)+1,table_id:parseInt(max)+1,products:products};
+    orders.push(order);
+    insertTableOrder(order);		
 }
 
 
 function removeOrderById(intId){
-	var lo = document.getElementsByTagName("table");
-	for (i=0; i<lo.length;i++){
-		if (lo[i].getAttribute("id")==intId){
-			lo[i].parentNode.removeChild(lo[i]);
-		}
+    var lo = document.getElementsByTagName("table");
+    for (i=0; i<lo.length;i++){
+	if (lo[i].getAttribute("id")==intId){
+            lo[i].parentNode.removeChild(lo[i]);
 	}
+    }
+    for (i=0;i<orders.length;i++){
+        if (parseInt(orders[i].order_id)==parseInt(intId)){
+            orders.splice(i,1);
+        }
+    }
 }
 

@@ -12,39 +12,28 @@
     <!-- Bootstrap core CSS -->
     <link href="Css/bootstrap.min.css" rel="stylesheet">
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-    <script type="text/javascript" src="Js/OrdersController.js"></script>
 	
     <!-- Custom styles for this template -->
     <link href="Css/cover.css" rel="stylesheet">
   </head>
 
-  <body class="text-center" onload="loadOrders()">
-    <div class="cover-container d-flex h-100 p-3 mx-auto flex-column">
-      <header class="masthead mb-auto">
-        <div class="inner">
-          <h3 class="masthead-brand">Order's Page</h3>
-          <nav class="nav nav-masthead justify-content-center">
-            <a class="nav-link active" href="#">Home</a>
-            <a class="nav-link" href="#">Orders</a>
-            <a class="nav-link" href="#">New Order</a>
-          </nav>
-        </div>
-      </header>
+  <body onload="OrdersControllerModule.showOrdersByTable()">
+      
+    <div> 
+     
 
-      <main role="main" class="inner cover">
-        <h1 class="cover-heading">Current Orders</h1>
+        <div>
+            <h1>Current Orders</h1>
+        </div>
+        
         <div id="OrdersDiv">
 		</div>
 		<p class="lead">
-          <a onclick="addOrder()" class="btn btn-lg ">Add Order</a>
+          
         </p>
-      </main>
+     
 
-      <footer class="mastfoot mt-auto">
-        <div class="inner">
-          <p>Cover template for <a href="https://getbootstrap.com/">Bootstrap</a>, by <a href="https://twitter.com/mdo">@mdo</a>.</p>
-        </div>
-      </footer>
+     
     </div>
 
 
@@ -52,10 +41,11 @@
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-    <script src="js/jquery-3.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    <script>window.jQuery || document.write('<script src="../../../../assets/js/vendor/jquery-slim.min.js"><\/script>')</script>
+    <script src="js/jquery-3.js"  crossorigin="anonymous"></script>
+    <!--script>window.jQuery || document.write('<script src="js/vendor/jquery-slim.min.js"><\/script>')</script-->
     <script src="js/popper.js"></script>
     <script src="js/bootstrap.js"></script>
     <script src="js/OrdersController.js"></script>
+    <script src="js/RestaurantRestController.js"></script>
   </body>
 </html>

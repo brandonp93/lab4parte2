@@ -12,27 +12,46 @@ var RestControllerModule = (function () {
     });
   };
 
-  var updateOrder = function (order, callback) {
-    // todo implement
+  var updateOrder = function (idmesa,orden, callback) {
+    console.log(orden);
+    axios({
+        method: 'put',
+        url: '/orders/'+idmesa,
+        data: orden
+    });
   };
   
   var getOrderByID = function (order,callback){
-      console.log(order);
+      
       axios.get('/orders/'+order).then(function (response) {
-        var order = Object.entries(response['data']);
-        callback.onSuccess(order);
+        console.log(response['data']);
+        callback.onSuccess(response['data']);
     }).catch(function (error) {
         callback.onFailed(error);
     });
-  }
-
-  var deleteOrder = function (idmesa,callback) {
-    // todo implement
-    axios.delete('/orders/'+idmesa,data);
   };
 
-  var createOrder = function (order, callback) {
+  var deleteOrder = function (idmesa,orden,callback) {
     // todo implement
+    console.log("idmesa: " + idmesa +" orden: " + orden[0]);
+    
+    axios({
+        method: 'delete',
+        url: '/orders/'+idmesa,
+        data: orden
+    });
+   
+  };
+
+  var createOrder = function (id,order, callback) {
+    // todo implement
+    console.log(order);
+    axios({
+        method: 'post',
+        url: '/orders/2',
+        data: order
+        
+    });
   };
 
   return {

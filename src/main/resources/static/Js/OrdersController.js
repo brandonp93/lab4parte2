@@ -29,39 +29,79 @@ var OrdersControllerModule = (function () {
     };
     
    
-    var updateOrder = function () {
-      // todo implement
-
-    };
-
-    var getOrderByID = function(){
-        var callback = {
+    var updateOrder = function (idmesa,orden) {
+      var callback = {
           onSuccess: function(order){
-                  var orderJSON = {order_id:order[0][0],table_id:order[0][1].tableNumber};
-                  console.log(orderJSON);
+                  console.log(order);
+                  var orderJSON = {order_id:order.orderAmountsMap,table_id:order.tableNumber};
+                  
               },  
               onFailed: function(error){
                   console.log(error);
               }
 
       };
-       RestControllerModule.getOrderByID(callback);
+       RestControllerModule.updateOrder(idmesa,orden,callback);
+
     };
 
-    var deleteOrderItem = function (itemName) {
-      // todo implement
+    var getOrderByID = function(idorden){
+        var callback = {
+          onSuccess: function(order){
+                  console.log(order);
+                  var orderJSON = {order_id:order.orderAmountsMap,table_id:order.tableNumber};
+                  
+              },  
+              onFailed: function(error){
+                  console.log(error);
+              }
+
+      };
+       RestControllerModule.getOrderByID(idorden,callback);
+    };
+
+    var deleteOrderItem = function (idmesa,orden) {
+      var callback = {
+          onSuccess: function(order){
+                  console.log(order);
+                  var orderJSON = {order_id:order.orderAmountsMap,table_id:order.tableNumber};
+                  
+              },  
+              onFailed: function(error){
+                  console.log(error);
+              }
+
+      };
+      RestControllerModule.deleteOrder(idmesa,orden,callback);
     };
 
     var addItemToOrder = function (orderId, item) {
       // todo implement
+     
     };
+    
+    var createOrder = function (id,orden){
+        var callback = {
+          onSuccess: function(order){
+                  console.log(order);
+                  var orderJSON = {order_id:order.orderAmountsMap,table_id:order.tableNumber};
+                  
+              },  
+              onFailed: function(error){
+                  console.log(error);
+              }
 
+      };
+      RestControllerModule.createOrder(id,orden,callback);
+    };
+    
     return {
       showOrdersByTable: showOrdersByTable,
       updateOrder: updateOrder,
       getOrderByID: getOrderByID,
       deleteOrderItem: deleteOrderItem,
-      addItemToOrder: addItemToOrder
+      addItemToOrder: addItemToOrder,
+      createOrder: createOrder
     };
 
 })();

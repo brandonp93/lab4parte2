@@ -127,12 +127,16 @@ public class OrdersAPIController {
         }
      
     @RequestMapping(path = "/{idmesa}",method = RequestMethod.DELETE)	
-        public ResponseEntity<?> manejadorDeleteOrder(@PathVariable int idmesa,@RequestBody Order o){
+        public ResponseEntity<?> manejadorDeleteOrder(@PathVariable int idmesa, @RequestBody Order o){
             try {
                     //registrar dato 
+                    System.out.println("Orden PEEEEEEEEEEROOOOOOOO");
+                    System.out.println(o);
                     for (Map.Entry<String, Integer> entry : o.getOrderAmountsMap().entrySet()) {
                            ordersService.getTableOrder(idmesa).deleteDish(entry.getKey(),entry.getValue());
                     }
+                    //ordersService.getTableOrder(idmesa).deleteDish(idmesa);
+                    
                     return new ResponseEntity<>(HttpStatus.ACCEPTED);
             } catch (Exception ex) {
                     Logger.getLogger(OrdersAPIController.class.getName()).log(Level.SEVERE, null, ex);

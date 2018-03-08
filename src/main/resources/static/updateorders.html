@@ -17,15 +17,19 @@
     <link href="Css/cover.css" rel="stylesheet">
   </head>
 
-  <body onload="OrdersControllerModule.getOrderByID(3)">
+  <body onload="OrdersControllerModule.updateOrder('1',{orderAmountsMap: {
+         TE: 2,
+         DORITOS: 1
+         
+            },
+    tableNumber: 1
+  })">
       
     
         <div>
             <h1>Update orders</h1>
             <div style="margin-top: 20px">
-            <select id="tables">
-                
-            </select>
+            
             </div>
         </div>
       

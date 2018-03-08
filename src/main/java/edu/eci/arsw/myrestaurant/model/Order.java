@@ -49,6 +49,7 @@ public class Order {
     }
 
     public void deleteDish(String plate, int amount) throws OrderServicesException{
+        
         if (orderAmountsMap.containsKey(plate)){
             int delta = orderAmountsMap.get(plate)-amount;
             if (delta>0){

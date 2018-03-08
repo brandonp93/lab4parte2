@@ -1,24 +1,25 @@
 /**
 *
 **/
+//create a list to contain all the formated orders in a standar
+var ordersFormated = [];
 
 var OrdersControllerModule = (function () {
 
     var showOrdersByTable = function () {
         var callback = {
             onSuccess: function(ordersMap){
-                
                 for(var w in ordersMap){
-                    
-                    var orderJSON = {order_id:ordersMap[w][0],table_id:ordersMap[w][1].tableNumber};
-                
-                    for (var produc in ordersMap[w][1].orderAmountsMap){
-                        //console.log(ordersMap[w][1].orderAmountsMap);
-                        
+                    var pdrs = [];
+                    var orderJSON = {order_id:ordersMap[w][0],table_id:ordersMap[w][1].tableNumber,products:pdrs};
+                    var pr = ordersMap[w][1].orderAmountsMap;
+                    for (var produc in pr){
+                        var po = {product:produc,quantity:pr[produc]};
+                        pdrs.push(po);
                     }
+                    ordersFormated.push(orderJSON);
+                    insertTableOrder(orderJSON);
                 }
-                allOrders(ordersMap);
-                console.log(orderJSON);
             },  
             onFailed: function(error){
                 console.log(error);
@@ -47,28 +48,6 @@ var OrdersControllerModule = (function () {
   };
 
 })();
-
-function allOrders(ordenes){
-    for(var w in ordenes){
-        //console.log(ordenes[w]);
-        ordenes[w].order_id = ordenes[w][0];
-        ordenes[w].table_id = ordenes[w][1].tableNumber;
-        delete ordenes[w][1].tableNumber;
-        ordenes[w].products = [ordenes[w][1].orderAmountsMap];
-        delete ordenes[w][1].orderAmountsMap;  
-        for(var k in ordenes[w].products){
-           for(var g in ordenes[w].products[k]){
-               ordenes[w].products.push({"product": g , "quantity":ordenes[w].products[k][g]});
-           }    
-        }   
-        ordenes[w].products.splice(0,1);
-        var x = {};
-        x.order_id = ordenes[w].order_id;
-        x.table_id = ordenes[w].table_id;
-        x.products = ordenes[w].products;
-        insertTableOrder(x);
-    } 
-}
 
 function setTableHeader(rowHeader){
 	var pr = document.createElement("th");
@@ -123,5 +102,3 @@ function insertTableOrder(orderInsert){
 	db.appendChild(b);
 	
 }
-
-function ta

@@ -17,23 +17,48 @@
     <link href="Css/cover.css" rel="stylesheet">
   </head>
 
-  <body onload="OrdersControllerModule.updateOrder('1',{orderAmountsMap: {
-         TE: 2,
-         DORITOS: 1
-         
-            },
-    tableNumber: 1
-  })">
+  <body onload="OrdersControllerModule.getOrders()">
       
     
-        <div>
-            <h1>Update orders</h1>
-            <div style="margin-top: 20px">
-            
+        
+           
+        <header class="masthead mb-auto">
+-        <div class="inner">
+-          <nav class="nav nav-masthead justify-content-center">
+-      
+-            <a class="nav-link" href="index.html">Orders</a>
+-            <a class="nav-link" href="updateorders.html#">Update Order</a>
+-          </nav>
+-        </div>
+-      </header>
+ 
+      <div style="margin-top: 100px;" class="justify-content-center" >
+             <h3>Update Orders</h3>
+                 <table>
+                        <tr>
+                            <td><select id="opciones">
+                            </select></td>
+                            <td><button value="Aceptar" onclick="selected()">Aceptar</button></td>
+                        </tr>     
+                </table>
+                 <table>                   
+                        <tr>
+                          <td><input id="addValue" type="text" value="Item Name"></td>
+                          <td><input id="addQuantity" type="text" value="Quantity"></td>
+                          <td>  <button value="Agregar" onclick="agregar()" >Agregar</button></td>
+                     
+                        </tr>
+                </table>
+             
+             <div style="margin-top: 50px">
+                 <table id="addTabla">        
+                    
+                        
+                </table>
             </div>
-        </div>
+            </div>
+            
       
-     
 
 
 

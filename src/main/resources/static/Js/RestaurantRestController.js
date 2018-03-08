@@ -33,7 +33,7 @@ var RestControllerModule = (function () {
 
   var deleteOrder = function (idmesa,orden,callback) {
     // todo implement
-    console.log("idmesa: " + idmesa +" orden: " + orden[0]);
+    console.log("idmesa: " + idmesa +" orden: " + orden);
     
     axios({
         method: 'delete',

@@ -27,25 +27,42 @@ var OrdersControllerModule = (function () {
         };
         RestControllerModule.getOrders(callback);
     };
+    
+   
+    var updateOrder = function () {
+      // todo implement
 
-  var updateOrder = function () {
-    // todo implement
-  };
+    };
 
-  var deleteOrderItem = function (itemName) {
-    // todo implement
-  };
+    var getOrderByID = function(){
+        var callback = {
+          onSuccess: function(order){
+                  var orderJSON = {order_id:order[0][0],table_id:order[0][1].tableNumber};
+                  console.log(orderJSON);
+              },  
+              onFailed: function(error){
+                  console.log(error);
+              }
 
-  var addItemToOrder = function (orderId, item) {
-    // todo implement
-  };
+      };
+       RestControllerModule.getOrderByID(callback);
+    };
 
-  return {
-    showOrdersByTable: showOrdersByTable,
-    updateOrder: updateOrder,
-    deleteOrderItem: deleteOrderItem,
-    addItemToOrder: addItemToOrder
-  };
+    var deleteOrderItem = function (itemName) {
+      // todo implement
+    };
+
+    var addItemToOrder = function (orderId, item) {
+      // todo implement
+    };
+
+    return {
+      showOrdersByTable: showOrdersByTable,
+      updateOrder: updateOrder,
+      getOrderByID: getOrderByID,
+      deleteOrderItem: deleteOrderItem,
+      addItemToOrder: addItemToOrder
+    };
 
 })();
 
@@ -102,3 +119,4 @@ function insertTableOrder(orderInsert){
 	db.appendChild(b);
 	
 }
+

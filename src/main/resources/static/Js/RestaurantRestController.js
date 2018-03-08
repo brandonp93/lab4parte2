@@ -16,8 +16,14 @@ var RestControllerModule = (function () {
     // todo implement
   };
   
-  var getOrderByID = function (order){
-      
+  var getOrderByID = function (order,callback){
+      console.log(order);
+      axios.get('/orders/'+order).then(function (response) {
+        var order = Object.entries(response['data']);
+        callback.onSuccess(order);
+    }).catch(function (error) {
+        callback.onFailed(error);
+    });
   }
 
   var deleteOrder = function (idmesa,callback) {
@@ -32,6 +38,7 @@ var RestControllerModule = (function () {
   return {
     getOrders: getOrders,
     updateOrder: updateOrder,
+    getOrderByID: getOrderByID,
     deleteOrder: deleteOrder,
     createOrder: createOrder
   };

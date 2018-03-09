@@ -1,0 +1,14 @@
+/home/local/LABINFO/2102463/Documents/lab4parte2/src/main/java/edu/eci/arsw/myrestaurant/beans/BillCalculator.java
+/home/local/LABINFO/2102463/Documents/lab4parte2/src/main/java/edu/eci/arsw/myrestaurant/model/Order.java
+/home/local/LABINFO/2102463/Documents/lab4parte2/src/main/java/edu/eci/arsw/myrestaurant/beans/impl/BasicBillCalculator.java
+/home/local/LABINFO/2102463/Documents/lab4parte2/src/main/java/edu/eci/arsw/myrestaurant/model/ProductType.java
+/home/local/LABINFO/2102463/Documents/lab4parte2/src/main/java/edu/eci/arsw/myrestaurant/services/RestaurantOrderServicesStub.java
+/home/local/LABINFO/2102463/Documents/lab4parte2/src/main/java/edu/eci/arsw/myrestaurant/RestapidemoApplication.java
+/home/local/LABINFO/2102463/Documents/lab4parte2/src/main/java/edu/eci/arsw/myrestaurant/services/OrderServicesException.java
+/home/local/LABINFO/2102463/Documents/lab4parte2/src/main/java/edu/eci/arsw/myrestaurant/beans/impl/BillWithTaxesCalculator.java
+/home/local/LABINFO/2102463/Documents/lab4parte2/src/main/java/edu/eci/arsw/myrestaurant/restcontrollers/OrdersAPIController.java
+/home/local/LABINFO/2102463/Documents/lab4parte2/src/main/java/edu/eci/arsw/myrestaurant/beans/impl/colombia/StandardTaxesCalculator.java
+/home/local/LABINFO/2102463/Documents/lab4parte2/src/main/java/edu/eci/arsw/myrestaurant/beans/TaxesCalculator.java
+/home/local/LABINFO/2102463/Documents/lab4parte2/src/main/java/edu/eci/arsw/myrestaurant/beans/impl/colombia/TaxesCalculator2016ColTributaryReform.java
+/home/local/LABINFO/2102463/Documents/lab4parte2/src/main/java/edu/eci/arsw/myrestaurant/model/RestaurantProduct.java
+/home/local/LABINFO/2102463/Documents/lab4parte2/src/main/java/edu/eci/arsw/myrestaurant/services/RestaurantOrderServices.java

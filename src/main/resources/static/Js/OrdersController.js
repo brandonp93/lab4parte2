@@ -22,7 +22,8 @@ var OrdersControllerModule = (function () {
                 }
             },  
             onFailed: function(error){
-                console.log(error);
+                console.log("Falla en el servicio "+error);
+                alert("No se puede conectar en este momento con el chat, intentelo de nuevo mas tarde");
             }
         };
         RestControllerModule.getOrders(callback);
@@ -236,17 +237,21 @@ function setTableHeader(rowHeader){
 }
 
 function insertTableOrder(orderInsert){
-	//get the parent content of the tables representation of the orders
-	var content = document.getElementById("OrdersDiv");
-	//create a tag to identify which order is presented
-	var inf = document.createElement("caption");
-	inf.innerHTML="ORDER "+ String(orderInsert.order_id);
-	//create a DOM table
+    //get the parent content of the tables representation of the orders
+	var content = document.getElementById("ordersDiv");
+    //create a tag to identify which order is presented
+	var inf = document.createElement("h3");
+	inf.innerHTML="Table "+ String(orderInsert.table_id);
+        inf.setAttribute("id","caption"+String(orderInsert.table_id));
+    //create a DOM table
 	var t = document.createElement("table");
-	t.appendChild(inf);
+    //put an id to the table to can identify that
 	t.setAttribute("id",orderInsert.table_id);
 	t.setAttribute("class", "table");
+    //ad the caption and the table to the document
+        content.appendChild(inf);
 	content.appendChild(t);	
+    //define the header of the table
 	var th = document.createElement("thead");
 	th.setAttribute("class","thead-light");
 	var tr = document.createElement("tr");
@@ -260,20 +265,25 @@ function insertTableOrder(orderInsert){
 		var rp = t.insertRow(t.rows.length);
 		rp.insertCell(0).appendChild(document.createTextNode(productInsert[i].product));
 		rp.insertCell(1).appendChild(document.createTextNode(productInsert[i].quantity));
-	}	
-	//create the button to delete the order
+	}
 	var db = document.createElement("p");
 	db.setAttribute("class", "lead");
 	var rtl = t.insertRow(t.rows.length);
         rtl.insertCell(0).appendChild(db);
         rtl.insertCell(1);
         rtl.insertCell(2).setAttribute("id",orderInsert.order_id+"total");
-        //getTotal(orderInsert.order_id);
-	var b = document.createElement("a");
-	b.setAttribute("class","btn btn-lg");
-	b.innerHTML = "Remove this Order";
-	b.setAttribute("onclick","removeOrderById("+String(orderInsert.table_id)+")");
-	db.appendChild(b);
-	
+        getTotal(orderInsert.order_id);	
+}
+
+function getTotal(idMesa){
+    axios.get('/orders/'+idMesa+'/total')
+            .then(function (response) {
+              //console.log(response['data']);
+              document.getElementById(idMesa+"total").innerHTML=response['data'];
+            })
+            .catch(function (error) {
+              console.log(error);
+              alert("No podemos Completar la solicitud, puede que se muestren datos erroneos, intentelo de nuevo o mas tarde");
+        });
 }
 

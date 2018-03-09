@@ -31,20 +31,6 @@ function allOrders(ordenes){
 function dialog() {
     alert("There is a problem with our servers. We apologize for the inconvince, please try again later");
 }
-
-function getTotal(idMesa){
-    axios.get('/orders/'+idMesa+'/total')
-            .then(function (response) {
-              //console.log(response['data']);
-              document.getElementById(idMesa+"total").innerHTML=response['data'];
-            })
-            .catch(function (error) {
-              console.log(error);
-              dialog();
-        });
-}
-
-
 function addProductToOrder(idOrder){
 	var newOrder = {product:"CHOP SUEY",quantity:2,Price:15000};
 	var t = document.getElementById(idOrder);
